@@ -1,77 +1,15 @@
-# Exercise
+# Steps to solve this exercise
 
-A tiny version of the Capfi platform: ingest CSV → queue → consolidate → search.
+I first setup the environment and started to analyze the codebase starting from the backend side.
 
-## Stack
+Once i understood how the code worked, I created a new type for the second source file and changed the company type structure to match requirements. I also created a new collections for the new file.
 
-- **Backend** (`backend/`): Node + Hono + MongoDB. TypeScript, run via `tsx`.
-- **Frontend** (`frontend/`): Vue 3 + Vite. Single search page.
-- **Database**: local MongoDB (`mongodb://localhost:27017`, db `capfi-exercise`).
+In order to populate my MongoDB DB, I copied the ingest-source1 script file and adapted it to work for source2. Once done I was able to run the script and see the database fufilled with my new values and merged the data needed from source2 into companies collection.
+At that stage, I started the frontend and could see the values with the new fields, i made sure to add the new fields and retrieve new values.
 
-## Pipeline
+Then, i needed to add the features asked in the assignment starting by the filter by website using mongoDb $nin query predicate operator and filter by numberOfEmployees using the existing helper function 'addRange'.
 
-```
-Entreprises1.csv ──► [ingest-source1] ──► db.source1
-                                          │
-                                          ▼
-                                    db.queuedCommands
-                                          │
-                                          ▼
-                                  [process-queue]
-                                          │
-                                          ▼
-                                     db.companies
-                                          │
-                                          ▼
-                              POST /api/search   POST /api/list
-```
+Finally, I worked on the front end to add new numberOfEmployees and Website filter.
 
-Each ingest script writes to its own source collection and pushes one
-`company-refresh` command per affected id. The processor drains the queue and
-rebuilds the matching `companies` document by merging all source collections.
+PS : I added a new feature that allows to load data from backend when the Vue page loads up using watch and onMounted from Vue library.
 
-## Setup
-
-```sh
-# 1. start MongoDB locally on port 27017
-
-# 2. backend
-cd backend
-pnpm install
-pnpm ingest:source1            # loads ../data/Entreprises1.csv into db.source1
-pnpm process-queue             # drains queue, populates db.companies
-pnpm dev                       # http://localhost:3001
-
-# 3. frontend (in another terminal)
-cd frontend
-pnpm install
-pnpm dev                       # http://localhost:5173
-```
-
-The Vite dev server proxies `/api/*` to the backend.
-
-## API
-
-Two endpoints, mirroring the real platform's split:
-
-- `POST /api/search` — takes filter criteria, returns `{ ids, total }`.
-- `POST /api/list` — takes `{ ids }`, returns `{ companies }` with full docs.
-
-Run the project, open the search page, and try things to see what's
-currently supported.
-
-## The exercise
-
-A second data source, `data/Entreprises2.csv`, needs to flow through the
-same pipeline so the search UI can:
-
-- filter companies on **whether they have a website or not**,
-- filter companies on **number of employees**,
-- and naturally show the new fields on the result rows.
-
-The `Tranche effectifs` column in that CSV is noise — leave it out.
-
-How you split the work between ingestion, consolidation, the API, and the
-frontend is up to you.
-
-Take the time and care as if this was a real project in production, with a more data expected than 200 companies.

@@ -1,0 +1,22 @@
+{
+	"name": "exercise-backend",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"ingest:source1": "node src/scripts/ingest-source1.ts",
+		"ingest:source2": "node src/scripts/ingest-source2.ts",
+		"process-queue": "node src/scripts/process-queue.ts",
+		"dev": "node --watch src/server.ts",
+		"start": "node src/server.ts"
+	},
+	"dependencies": {
+		"@hono/node-server": "^1.13.7",
+		"csv-parse": "^5.5.6",
+		"hono": "^4.6.10",
+		"mongodb": "^6.10.0"
+	},
+	"devDependencies": {
+		"@types/node": "^24.0.0",
+		"typescript": "^6.0.0"
+	}
+}

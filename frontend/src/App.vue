@@ -92,9 +92,22 @@ async function search() {
 }
 
 function reset() {
-	for (const k of Object.keys(filters) as Array<keyof typeof filters>) {
-		filters[k] = "";
-	}
+	filters.name = "";
+	filters.city = "";
+	filters.zipCode = "";
+	filters.naceCode = "";
+	filters.sicCode = "";
+	filters.revenueMin = "";
+	filters.revenueMax = "";
+	filters.capRatingMin = "";
+	filters.capRatingMax = "";
+	filters.creationDateMin = "";
+	filters.creationDateMax = "";
+	filters.numberOfEmployeesMin = "";
+	filters.numberOfEmployeesMax = "";
+	filters.hasWebsite = false;
+
+	
 	companies.value = [];
 	total.value = 0;
 	searched.value = false;
@@ -169,7 +182,7 @@ onMounted(() => {
 		<div class="field">
 			Number of Employees
 			<div class="field-range">
-				<input v-model="filters.numberOfEmployeesMin" type="number" step=1 placeholder="min" />
+				<input v-model="filters.numberOfEmployeesMin" type="number" step="1" placeholder="min" />
 				<input v-model="filters.numberOfEmployeesMax" type="number" step="1" placeholder="max" />
 			</div>
 		</div>

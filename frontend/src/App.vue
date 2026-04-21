@@ -114,13 +114,7 @@ function formatRating(n: number | undefined): string {
 	return n.toFixed(2);
 }
 
-watch(
-	filters,
-	() => {
-		search();
-	},
-	{ deep: true }
-);
+
 
 onMounted(() => {
 	search();

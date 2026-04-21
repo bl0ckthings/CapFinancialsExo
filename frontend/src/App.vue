@@ -2,7 +2,7 @@
 import { reactive, ref, onMounted, watch } from "vue";
 const BACKEND_URL =
   (import.meta.env.VITE_BACKEND_URL as string | undefined) ??
-  "http://144.91.84.87:3001";
+  "https://api.d4vonbnb.xyz";
 
 const api = (path: string) => `${BACKEND_URL}${path}`;
 

@@ -1,15 +1,38 @@
 # Steps to solve this exercise
 
-I first setup the environment and started to analyze the codebase starting from the backend side.
+1. Initial Setup & Codebase Analysis
 
-Once i understood how the code worked, I created a new type for the second source file and changed the company type structure to match requirements. I also created a new collections for the new file.
+I started by setting up the environment and analyzing the backend codebase to understand how the existing system works and how data flows through it.
 
-In order to populate my MongoDB DB, I copied the ingest-source1 script file and adapted it to work for source2. Once done I was able to run the script and see the database fufilled with my new values and merged the data needed from source2 into companies collection.
-At that stage, I started the frontend and could see the values with the new fields, i made sure to add the new fields and retrieve new values.
+2. Backend Changes
+New Source Integration
+Created a new type for the second source file.
+Updated the company type structure to match the new requirements.
+Added a new collection dedicated to the second source.
+Data Ingestion
+Duplicated the existing ingest-source1 script.
+Adapted it to support the second source (source2).
+Ran the script to populate the MongoDB database.
 
-Then, i needed to add the features asked in the assignment starting by the filter by website using mongoDb $nin query predicate operator and filter by numberOfEmployees using the existing helper function 'addRange'.
+At this point:
 
-Finally, I worked on the front end to add new numberOfEmployees and Website filter.
-
-PS : I added a new feature that allows to load data from backend when the Vue page loads up using watch and onMounted from Vue library.
-
+The database was successfully filled with data from both sources.
+Relevant fields from source2 were merged into the companies collection.
+3. Frontend Verification
+Started the frontend application.
+Confirmed that the new fields were properly displayed.
+Updated components to include and retrieve the new data fields.
+4. Feature Implementation
+Filtering Features
+Filter by website
+Implemented using MongoDB’s $nin query operator.
+Filter by number of employees
+Implemented using the existing helper function addRange.
+5. Frontend Enhancements
+Added UI elements for:
+numberOfEmployees filter
+website filter
+Ensured these filters correctly interact with backend queries.
+6. Additional Improvement
+Implemented automatic data loading on page initialization using Vue’s onMounted() hook.
+This ensures data is fetched from the backend as soon as the page loads.

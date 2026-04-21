@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { reactive, ref, onMounted, watch } from "vue";
+const BACKEND_URL =
+  (import.meta.env.VITE_BACKEND_URL as string | undefined) ??
+  "http://144.91.84.87:3001";
+
+const api = (path: string) => `${BACKEND_URL}${path}`;
 
 interface Company {
 	_id: string;
@@ -66,7 +71,7 @@ async function search() {
 	loading.value = true;
 	searched.value = true;
 	try {
-		const searchRes = await fetch("/api/search", {
+		const searchRes = await fetch(api("/api/search"), {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(buildBody()),
@@ -79,7 +84,7 @@ async function search() {
 			return;
 		}
 
-		const listRes = await fetch("/api/list", {
+		const listRes = await fetch(api("/api/list"), {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ ids }),
@@ -107,7 +112,7 @@ function reset() {
 	filters.numberOfEmployeesMax = "";
 	filters.hasWebsite = false;
 
-	
+
 	companies.value = [];
 	total.value = 0;
 	searched.value = false;

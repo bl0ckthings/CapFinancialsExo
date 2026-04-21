@@ -4,7 +4,7 @@ import vue from "@vitejs/plugin-vue";
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
-  const backendUrl = env.VITE_BACKEND_URL || "http://localhost:3001";
+  const backendUrl = env.VITE_BACKEND_URL || "http://144.91.84.87:3001";
 
   return {
     plugins: [vue()],
